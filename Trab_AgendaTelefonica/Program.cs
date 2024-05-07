@@ -17,6 +17,7 @@ internal class Program
             Console.WriteLine("3 - Mostrar todos os Contatos");
             Console.WriteLine("4 - Pesquisar Contato");
             Console.WriteLine("5 - Modificar Dados do Contato");
+            Console.WriteLine("6 - Modificar Telefones do Contato");
             Console.WriteLine("0 - Sair");
             opt = int.Parse(Console.ReadLine());
             switch (opt)
@@ -47,6 +48,10 @@ internal class Program
                     Console.WriteLine("Informe o nome do contato que deseja alterar dados:");
                     contactList.ModifyByName(Console.ReadLine());
                     pressToContinue();
+                    break;
+                case 6:
+                    Console.WriteLine("Informe o nome do contato que deseja pesquisar:");
+                    //editPhoneContact();
                     break;
                 default:
                     Console.WriteLine("Opção inválida!");
