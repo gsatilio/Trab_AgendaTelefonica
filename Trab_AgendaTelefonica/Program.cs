@@ -8,7 +8,6 @@ internal class Program
     {
         ContactList contactList = new ContactList();
         int opt;
-        string name;
         do
         {
             Console.Clear();
@@ -25,33 +24,31 @@ internal class Program
                 case 0:
                     break;
                 case 1:
-                    Console.WriteLine("Informe o nome da pessoa:");
-                    name = Console.ReadLine();
-                    contactList.Add(createContact(name));
+                    contactList.add(createContact());
                     pressToContinue();
                     break;
                 case 2:
                     Console.WriteLine("Informe o nome do contato que deseja remover:");
-                    contactList.RemoveByName(Console.ReadLine());
+                    contactList.removeByName(Console.ReadLine());
                     pressToContinue();
                     break;
                 case 3:
-                    contactList.ShowAll();
+                    contactList.showAll();
                     pressToContinue();
                     break;
                 case 4:
                     Console.WriteLine("Informe o nome do contato que deseja pesquisar:");
-                    contactList.ShowContact(Console.ReadLine());
+                    contactList.showContact(Console.ReadLine());
                     pressToContinue();
                     break;
                 case 5:
                     Console.WriteLine("Informe o nome do contato que deseja alterar dados:");
-                    contactList.ModifyByName(Console.ReadLine());
+                    contactList.modifyByName(Console.ReadLine());
                     pressToContinue();
                     break;
                 case 6:
-                    Console.WriteLine("Informe o nome do contato que deseja pesquisar:");
-                    //editPhoneContact();
+                    changeContactPhoneList(contactList);
+                    pressToContinue();
                     break;
                 default:
                     Console.WriteLine("Opção inválida!");
@@ -60,14 +57,16 @@ internal class Program
             }
         } while (opt != 0);
     }
-    static Contact createContact(string name)
+    static Contact createContact()
     {
-        string email, phone;
+        string name, email, phone;
         string postalCode, city, state, street, neighborhood;
         Address address;
         Contact contact;
         ContactPhoneList contactPhoneList;
         int number;
+        Console.WriteLine("Informe o nome da pessoa:");
+        name = Console.ReadLine();
 
         Console.WriteLine("Informe o CEP:");
         postalCode = Console.ReadLine();
@@ -84,7 +83,7 @@ internal class Program
 
         address = new Address(postalCode, state, city, street, neighborhood, number);
 
-        contactPhoneList = CreateContactPhoneList();
+        contactPhoneList = createContactPhoneList();
 
         Console.WriteLine("Informe o e-mail da pessoa:");
         email = Console.ReadLine();
@@ -92,7 +91,7 @@ internal class Program
         contact = new Contact(name, email, contactPhoneList, address);
         return contact;
     }
-    static ContactPhoneList CreateContactPhoneList()
+    static ContactPhoneList createContactPhoneList()
     {
         ContactPhoneList contactPhoneList = new ContactPhoneList();
         string opt;
@@ -101,7 +100,6 @@ internal class Program
         {
             Console.WriteLine($"\nInforme o {count}o Telefone ");
             contactPhoneList.Add(new ContactPhone(Console.ReadLine()));
-
             Console.WriteLine("\nDeseja adicionar mais um telefone?");
             Console.WriteLine("[S - Sim] ou [Outra tecla para Não]");
             opt = Console.ReadLine().ToLower();
@@ -114,5 +112,30 @@ internal class Program
     {
         Console.WriteLine("Pressione qualquer tecla para continuar...");
         Console.ReadKey();
+    }
+    static void changeContactPhoneList(ContactList contactList)
+    {
+        ContactPhoneList contactPhoneList = new ContactPhoneList(); // cria nova contactPhoneList
+        string name, opt;
+        int count = 1;
+        Console.WriteLine("Informe o nome da pessoa:");
+        name = Console.ReadLine();
+        if (contactList.findContactByName(name)) // localiza a pessoa pelo nome
+        {
+            do
+            {
+                Console.WriteLine($"\nInforme o {count}o Telefone ");
+                contactPhoneList.Add(new ContactPhone(Console.ReadLine()));
+
+                Console.WriteLine("\nDeseja adicionar mais um telefone?");
+                Console.WriteLine("[S - Sim] ou [Outra tecla para Não]");
+                opt = Console.ReadLine().ToLower();
+                count++;
+            } while (opt == "s");
+            contactList.changeContactPhoneList(contactPhoneList, name); // substitui a contactPhoneList pela nova
+        } else
+        {
+            Console.WriteLine("Nome não existe na lista");
+        }
     }
 }

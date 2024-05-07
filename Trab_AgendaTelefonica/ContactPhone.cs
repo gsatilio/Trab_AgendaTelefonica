@@ -15,19 +15,7 @@ namespace Trab_AgendaTelefonica
         {
             this.phone = phone;
         }
-        public override string ToString()
-        {
-            return "\nTelefone: " + this.phone;
-        }
         public string getPhone()
-        {
-            return "Telefone: " + this.phone;
-        }
-        public void setPhone(string phone)
-        {
-            this.phone = phone;
-        }
-        public string getName()
         {
             return this.phone;
         }
@@ -38,6 +26,10 @@ namespace Trab_AgendaTelefonica
         public ContactPhone getNext()
         {
             return this.next;
+        }
+        public override string ToString()
+        {
+            return "Número: " + this.phone;
         }
     }
 }

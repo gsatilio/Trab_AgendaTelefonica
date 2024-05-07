@@ -110,30 +110,6 @@ namespace Trab_AgendaTelefonica
                 return false;
             }
         }
-        public bool ExistsContact(string name)
-        {
-            bool exists = false;
-            ContactPhone aux = head;
-            if (!isEmpty())
-            {
-                do
-                {
-                    if (aux.getName() == name)
-                    {
-                        exists = true;
-                        Console.WriteLine(aux.ToString());
-                    }
-                    aux = aux.getNext();
-                } while (aux != null);
-            }
-            if (!exists)
-            {
-                return false;
-            } else
-            {
-                return true;
-            }
-        }
         public ContactPhone getHead()
         {
             return head;

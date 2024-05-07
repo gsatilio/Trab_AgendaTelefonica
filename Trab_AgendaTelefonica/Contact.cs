@@ -22,6 +22,10 @@ namespace Trab_AgendaTelefonica
             this.address = address;
             next = null;
         }
+        public Contact(ContactPhoneList contactPhoneList)
+        {
+            this.contactPhoneList = contactPhoneList;
+        }
         public string getName()
         {
             return this.name;
@@ -38,10 +42,6 @@ namespace Trab_AgendaTelefonica
         {
             return address;
         }
-        public override string ToString()
-        {
-            return "\nNome: " + this.name + "\nEmail: " + this.email;
-        }
         public void setName(string name)
         {
             this.name = name;
@@ -49,10 +49,6 @@ namespace Trab_AgendaTelefonica
         public void setEmail(string email)
         {
             this.email = email;
-        }
-        public string getEmail()
-        {
-            return email;
         }
         public void setAddress(Address address)
         {
@@ -65,6 +61,10 @@ namespace Trab_AgendaTelefonica
         public ContactPhoneList getContactPhoneList()
         {
             return this.contactPhoneList;
+        }
+        public override string ToString()
+        {
+            return "\nNome: " + this.name + "\nEmail: " + this.email;
         }
     }
 }

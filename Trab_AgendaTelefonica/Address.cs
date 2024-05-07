@@ -27,31 +27,7 @@ namespace Trab_AgendaTelefonica
         }
         public override string? ToString()
         {
-            return $"\nEndereço: \nCEP: {postalCode} \nCidade: {city} \nEstado: {state} \nEndereço: {street} \nBairro: {neighborhood} \nNúmero: {number}";
-        }
-        public string getPostalCode()
-        {
-            return this.postalCode;
-        }
-        public string getCity()
-        {
-            return this.city;
-        }
-        public string getState()
-        {
-            return this.state;
-        }
-        public string getStreet()
-        {
-            return this.street;
-        }
-        public string getNeighborhood()
-        {
-            return this.neighborhood;
-        }
-        public int getNumber()
-        {
-            return this.number;
+            return $"Endereço: \nCEP: {postalCode} \nCidade: {city} \nEstado: {state} \nEndereço: {street} \nBairro: {neighborhood} \nNúmero: {number}";
         }
     }
 }

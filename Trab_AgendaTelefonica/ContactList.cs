@@ -20,7 +20,7 @@ namespace Trab_AgendaTelefonica
             this.tail = null;
         }
 
-        public void Add(Contact contact)
+        public void add(Contact contact)
         {
             int compare;
             if (isEmpty())
@@ -59,7 +59,7 @@ namespace Trab_AgendaTelefonica
                 }
             }
         }
-        public void RemoveByName(string name)
+        public void removeByName(string name)
         {
             if (!isEmpty())
             {
@@ -107,7 +107,7 @@ namespace Trab_AgendaTelefonica
                 Console.WriteLine("A agenda está vazia.");
             }
         }
-        public void ModifyByName(string name)
+        public void modifyByName(string name)
         {
             if (!isEmpty())
             {
@@ -183,27 +183,32 @@ namespace Trab_AgendaTelefonica
             }
         }
 
-        public void ShowAll()
+        public void showAll()
         {
             Contact aux = head;
             ContactPhoneList contactPhoneList;
             ContactPhone contactPhone;
             Address auxaddress;
+            int count;
             if (!isEmpty())
             {
                 do
                 {
-                    auxaddress = aux.getAddress();
-                    contactPhoneList = aux.getContactPhoneList();
-                    contactPhone = contactPhoneList.getHead();
-                    Console.WriteLine(aux.ToString());
-                    Console.WriteLine(auxaddress.ToString());
+                    count = 0;
+                    auxaddress = aux.getAddress(); // pega o objeto endereço do Contato
+                    contactPhoneList = aux.getContactPhoneList(); // pega o objeto ContactPhoneList do Contato
+                    contactPhone = contactPhoneList.getHead(); // pega o head, primeiro item do ContactPhoneList
+                    Console.WriteLine(aux.ToString()); // imprime dados do Contato
+                    Console.WriteLine(auxaddress.ToString()); // imprime dados do Endereço do Contato
+                    Console.WriteLine("Telefone(s):");
                     do
                     {
-                        Console.WriteLine(contactPhone.getPhone());
+                        count++;
+                        Console.WriteLine(count + "o " + contactPhone.ToString()); // imprime telefones do ContactPhone
                         contactPhone = contactPhone.getNext();
                     } while (contactPhone != null);
                     aux = aux.getNext();
+                    Console.WriteLine("------------------------");
                 } while (aux != null);
             }
             else
@@ -211,17 +216,19 @@ namespace Trab_AgendaTelefonica
                 Console.WriteLine("Agenda vazia.");
             }
         }
-        public void ShowContact(string name)
+        public void showContact(string name)
         {
             bool exists = false;
             Contact aux = head;
             ContactPhoneList contactPhoneList;
             ContactPhone contactPhone;
             Address auxaddress;
+            int count;
             if (!isEmpty())
             {
                 do
                 {
+                    count = 0;
                     auxaddress = aux.getAddress();
                     if (aux.getName() == name)
                     {
@@ -229,9 +236,11 @@ namespace Trab_AgendaTelefonica
                         contactPhone = contactPhoneList.getHead();
                         Console.WriteLine(aux.ToString());
                         Console.WriteLine(auxaddress.ToString());
+                        Console.WriteLine("Telefone(s):");
                         do
                         {
-                            Console.WriteLine(contactPhone.getPhone());
+                            count++;
+                            Console.WriteLine(count + "o " + contactPhone.ToString());
                             contactPhone = contactPhone.getNext();
                         } while (contactPhone != null);
                         exists = true;
@@ -264,6 +273,53 @@ namespace Trab_AgendaTelefonica
 
             Address address = new Address(postalCode, state, city, street, neighborhood, number);
             return address;
+        }
+        public bool findContactByName(string name)
+        {
+            bool exists = false;
+            Contact aux = head;
+            if (!isEmpty())
+            {
+                do
+                {
+                    if (aux.getName() == name)
+                    {
+                        exists = true;
+                    }
+                    aux = aux.getNext();
+                } while (aux != null);
+            }
+            return exists;
+        }
+        public void changeContactPhoneList(ContactPhoneList contactPhoneList, string name)
+        {
+            if (!isEmpty())
+            {
+                Contact aux = head;
+                Contact prev = head;
+                bool compare;
+                do
+                {
+                    compare = name.Equals(aux.getName());
+                    if (!compare)
+                    {
+                        prev = aux;
+                        aux = aux.getNext();
+                    }
+                    else
+                    {
+                        aux.setContactPhoneList(contactPhoneList);
+                    }
+                } while (!compare && aux != null);
+                if (aux == null)
+                {
+                    Console.WriteLine("Nome não existe na lista");
+                }
+            }
+            else
+            {
+                Console.WriteLine("A agenda está vazia.");
+            }
         }
     }
 }
