@@ -55,7 +55,7 @@ namespace Trab_AgendaTelefonica
                 }
             }
         }
-        public void RemoveByName(string phone)
+        public void RemoveByPhone(string phone)
         {
             if (!isEmpty())
             {
@@ -94,45 +94,8 @@ namespace Trab_AgendaTelefonica
                     } while (!compare && aux != null);
                     if (aux == null)
                     {
-                        Console.WriteLine("Nome não existe na lista");
+                        Console.WriteLine("Numero não existe na lista");
                     }
-                }
-            }
-        }
-        public void ModifyByName(string phone)
-        {
-            if (!isEmpty())
-            {
-                ContactPhone aux = head;
-                ContactPhone prev = head;
-                bool compare;
-                do
-                {
-                    compare = phone.Equals(aux.getPhone());
-                    if (!compare)
-                    {
-                        prev = aux;
-                        aux = aux.getNext();
-                    }
-                    else
-                    {
-                        string opt;
-                        do
-                        {
-                            Console.WriteLine(aux.ToString());
-                            Console.WriteLine("Deseja alterar o Telefone dessa pessoa? (s/n)");
-                            opt = Console.ReadLine().ToLower();
-                        } while (opt != "s" && opt != "n");
-                        if (opt == "s")
-                        {
-                            Console.WriteLine("Informe o novo Telefone para o contato:");
-                            aux.setPhone(Console.ReadLine());
-                        }
-                    }
-                } while (!compare && aux != null);
-                if (aux == null)
-                {
-                    Console.WriteLine("Nome não existe na lista");
                 }
             }
         }
@@ -145,22 +108,6 @@ namespace Trab_AgendaTelefonica
             else
             {
                 return false;
-            }
-        }
-        public void ShowAll()
-        {
-            ContactPhone aux = head;
-            if (!isEmpty())
-            {
-                do
-                {
-                    Console.WriteLine(aux.ToString());
-                    aux = aux.getNext();
-                } while (aux != null);
-            }
-            else
-            {
-                Console.WriteLine("Agenda vazia.");
             }
         }
         public bool ExistsContact(string name)
@@ -186,6 +133,10 @@ namespace Trab_AgendaTelefonica
             {
                 return true;
             }
+        }
+        public ContactPhone getHead()
+        {
+            return head;
         }
     }
 }

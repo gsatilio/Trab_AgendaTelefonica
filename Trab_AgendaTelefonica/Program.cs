@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using System.Numerics;
+using System.Xml.Linq;
 using Trab_AgendaTelefonica;
 
 internal class Program
@@ -6,7 +7,6 @@ internal class Program
     private static void Main(string[] args)
     {
         ContactList contactList = new ContactList();
-        ContactPhoneList contactPhoneList = new ContactPhoneList();
         int opt;
         string name;
         do
@@ -27,32 +27,30 @@ internal class Program
                     Console.WriteLine("Informe o nome da pessoa:");
                     name = Console.ReadLine();
                     contactList.Add(createContact(name));
-                    contactPhoneList.Add(createContactPhone(name, true));
-                    Console.ReadKey();
+                    pressToContinue();
                     break;
                 case 2:
                     Console.WriteLine("Informe o nome do contato que deseja remover:");
                     contactList.RemoveByName(Console.ReadLine());
-                    Console.ReadKey();
+                    pressToContinue();
                     break;
                 case 3:
                     contactList.ShowAll();
-                    contactPhoneList.ShowAll();
-                    Console.ReadKey();
+                    pressToContinue();
                     break;
                 case 4:
                     Console.WriteLine("Informe o nome do contato que deseja pesquisar:");
                     contactList.ShowContact(Console.ReadLine());
-                    Console.ReadKey();
+                    pressToContinue();
                     break;
                 case 5:
                     Console.WriteLine("Informe o nome do contato que deseja alterar dados:");
                     contactList.ModifyByName(Console.ReadLine());
-                    Console.ReadKey();
+                    pressToContinue();
                     break;
                 default:
                     Console.WriteLine("Opção inválida!");
-                    Console.ReadKey();
+                    pressToContinue();
                     break;
             }
         } while (opt != 0);
@@ -60,7 +58,7 @@ internal class Program
     static Contact createContact(string name)
     {
         string email, phone;
-        string postalCode, city, state, street;
+        string postalCode, city, state, street, neighborhood;
         Address address;
         Contact contact;
         ContactPhoneList contactPhoneList;
@@ -74,32 +72,42 @@ internal class Program
         city = Console.ReadLine();
         Console.WriteLine("Informe o Endereço:");
         street = Console.ReadLine();
+        Console.WriteLine("Informe o Bairro:");
+        neighborhood = Console.ReadLine();
         Console.WriteLine("Informe o Número:");
         number = int.Parse(Console.ReadLine());
 
-        address = new Address(postalCode, state, city, street, number);
+        address = new Address(postalCode, state, city, street, neighborhood, number);
+
+        contactPhoneList = CreateContactPhoneList();
 
         Console.WriteLine("Informe o e-mail da pessoa:");
         email = Console.ReadLine();
 
-        contact = new Contact(name, email);
+        contact = new Contact(name, email, contactPhoneList, address);
         return contact;
     }
-    static ContactPhone createContactPhone(string name, bool newContact)
+    static ContactPhoneList CreateContactPhoneList()
     {
-        string phone;
         ContactPhoneList contactPhoneList = new ContactPhoneList();
-        ContactPhone contactPhone = null;
-        if (!newContact && !contactPhoneList.ExistsContact(name))
+        string opt;
+        int count = 1;
+        do
         {
-            Console.WriteLine("Pessoa não cadastrada.");
-        }
-        else
-        {
-            Console.WriteLine("Informe o telefone da pessoa:");
-            phone = Console.ReadLine();
-            contactPhone = new ContactPhone(name, phone);
-        }
-        return contactPhone;
+            Console.WriteLine($"\nInforme o {count}o Telefone ");
+            contactPhoneList.Add(new ContactPhone(Console.ReadLine()));
+
+            Console.WriteLine("\nDeseja adicionar mais um telefone?");
+            Console.WriteLine("[S - Sim] ou [Outra tecla para Não]");
+            opt = Console.ReadLine().ToLower();
+            count++;
+        } while (opt == "s");
+
+        return contactPhoneList;
+    }
+    static void pressToContinue()
+    {
+        Console.WriteLine("Pressione qualquer tecla para continuar...");
+        Console.ReadKey();
     }
 }

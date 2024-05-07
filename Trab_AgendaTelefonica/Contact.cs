@@ -10,16 +10,16 @@ namespace Trab_AgendaTelefonica
     internal class Contact
     {
         string name;
+        ContactPhoneList contactPhoneList;
         Address address;
         string email;
-        ContactPhoneList contactPhoneList;
         Contact next;
-        public Contact(string name, string email)
+        public Contact(string name, string email, ContactPhoneList contactPhoneList, Address address)
         {
             this.name = name;
             this.email = email;
-            //this.address = addres;
-            //this.contactPhoneList = contactPhoneList;
+            this.contactPhoneList = contactPhoneList;
+            this.address = address;
             next = null;
         }
         public string getName()
@@ -40,7 +40,7 @@ namespace Trab_AgendaTelefonica
         }
         public override string ToString()
         {
-            return "\nNome: " + this.name + "\nEndereço: " + "\nEmail: " + this.email;
+            return "\nNome: " + this.name + "\nEmail: " + this.email;
         }
         public void setName(string name)
         {
@@ -62,7 +62,7 @@ namespace Trab_AgendaTelefonica
         {
             this.contactPhoneList = contactPhoneList;
         }
-        public ContactPhoneList GetContactPhoneList()
+        public ContactPhoneList getContactPhoneList()
         {
             return this.contactPhoneList;
         }

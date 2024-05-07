@@ -102,6 +102,10 @@ namespace Trab_AgendaTelefonica
                     }
                 }
             }
+            else
+            {
+                Console.WriteLine("A agenda está vazia.");
+            }
         }
         public void ModifyByName(string name)
         {
@@ -162,6 +166,10 @@ namespace Trab_AgendaTelefonica
                     Console.WriteLine("Nome não existe na lista");
                 }
             }
+            else
+            {
+                Console.WriteLine("A agenda está vazia.");
+            }
         }
         bool isEmpty()
         {
@@ -178,11 +186,23 @@ namespace Trab_AgendaTelefonica
         public void ShowAll()
         {
             Contact aux = head;
+            ContactPhoneList contactPhoneList;
+            ContactPhone contactPhone;
+            Address auxaddress;
             if (!isEmpty())
             {
                 do
                 {
+                    auxaddress = aux.getAddress();
+                    contactPhoneList = aux.getContactPhoneList();
+                    contactPhone = contactPhoneList.getHead();
                     Console.WriteLine(aux.ToString());
+                    Console.WriteLine(auxaddress.ToString());
+                    do
+                    {
+                        Console.WriteLine(contactPhone.getPhone());
+                        contactPhone = contactPhone.getNext();
+                    } while (contactPhone != null);
                     aux = aux.getNext();
                 } while (aux != null);
             }
@@ -195,14 +215,26 @@ namespace Trab_AgendaTelefonica
         {
             bool exists = false;
             Contact aux = head;
+            ContactPhoneList contactPhoneList;
+            ContactPhone contactPhone;
+            Address auxaddress;
             if (!isEmpty())
             {
                 do
                 {
+                    auxaddress = aux.getAddress();
                     if (aux.getName() == name)
                     {
-                        exists = true;
+                        contactPhoneList = aux.getContactPhoneList();
+                        contactPhone = contactPhoneList.getHead();
                         Console.WriteLine(aux.ToString());
+                        Console.WriteLine(auxaddress.ToString());
+                        do
+                        {
+                            Console.WriteLine(contactPhone.getPhone());
+                            contactPhone = contactPhone.getNext();
+                        } while (contactPhone != null);
+                        exists = true;
                     }
                     aux = aux.getNext();
                 } while (aux != null);
@@ -214,7 +246,7 @@ namespace Trab_AgendaTelefonica
         }
         static Address changeAddress()
         {
-            string postalCode, city, state, street;
+            string postalCode, city, state, street, neighborhood;
             int number;
 
             Console.WriteLine("Informe o CEP:");
@@ -225,10 +257,12 @@ namespace Trab_AgendaTelefonica
             city = Console.ReadLine();
             Console.WriteLine("Informe o Endereço:");
             street = Console.ReadLine();
+            Console.WriteLine("Informe o Bairro:");
+            neighborhood = Console.ReadLine();
             Console.WriteLine("Informe o Número:");
             number = int.Parse(Console.ReadLine());
 
-            Address address = new Address(postalCode, state, city, street, number);
+            Address address = new Address(postalCode, state, city, street, neighborhood, number);
             return address;
         }
     }

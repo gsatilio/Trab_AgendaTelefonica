@@ -8,22 +8,20 @@ namespace Trab_AgendaTelefonica
 {
     internal class ContactPhone
     {
-        string name;
         string phone;
         ContactPhone next;
 
-        public ContactPhone(string name, string phone)
+        public ContactPhone(string phone)
         {
-            this.name = name;
             this.phone = phone;
         }
         public override string ToString()
         {
-            return "\nNome: " + this.name + "\nTelefone: " + this.phone;
+            return "\nTelefone: " + this.phone;
         }
         public string getPhone()
         {
-            return this.phone;
+            return "Telefone: " + this.phone;
         }
         public void setPhone(string phone)
         {
